@@ -1,0 +1,39 @@
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependency directories
+node_modules/
+
+# Optional: ESLint configuration
+.eslintcache
+
+# Optional: User-specific files
+.npm
+.npmrc
+yarn-error.log
+yarn-debug.log*
+
+# Editor directories and files
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
+# Mac OS
+.DS_Store
+
+# Windows
+Thumbs.db
+ehthumbs.db
+
+# Optional: Jest coverage
+coverage/
+
+# Optional: Temporary files
+*.tmp
+*.swp
+*.bak
