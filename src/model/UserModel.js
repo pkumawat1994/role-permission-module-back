@@ -22,13 +22,18 @@ const UserSchema = mongoose.Schema(
       require: true,
       trim: true,
     },
-    roleType: {
-      type: String,
-      default: "user",
-    },
+    // roleType: {
+    //   type: String,
+    //   default: "user",
+    // },
     profilePic: {
       type: String,
       require:false
+    },
+    rolePermission:{
+      type:mongoose.Types.ObjectId,
+      ref:"rolepermission"
+      
     },
     tokenForReset: {
       type: String,

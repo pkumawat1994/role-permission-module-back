@@ -7,8 +7,8 @@ import { ResumeProfileModel } from "../model/SliderModel.js";
 import { promises as fsPromises } from "fs";
 
 const createUser = async (req, res) => {
-  const { name, email, mobile, password } = req.body;
-  console.log(req, 123456);
+  const { name, email, mobile, password,roleType } = req.body;
+  console.log(req.body.roleType, 123456);
 
   try {
     console.log(req.file, 1071995);
@@ -16,7 +16,6 @@ const createUser = async (req, res) => {
     const findUserData = await UserModel.findOne({ email });
     if (findUserData) {
       await fsPromises.unlink(req.file.path);
-
       return res
         .status(400)
         .send({ status: 400, message: "User is already axist try again..." });
@@ -28,6 +27,7 @@ const createUser = async (req, res) => {
       mobile,
       profilePic: profileImage,
       password: hashPassword,
+      rolePermission:roleType
     }).save();
     if (result) {
       res.status(201).send({
@@ -78,7 +78,7 @@ const getUser = async (req, res) => {
   console.log(req.user, 555);
 
   try {
-    let data = await UserModel.find({ isDeleted: false }).select("-password");
+    let data = await UserModel.find({ isDeleted: false }).populate("rolePermission");
     if (data) {
       return res
         .status(200)
@@ -102,14 +102,15 @@ const deleteUser = async (req, res) => {
         { $set: { isDeleted: true, deletedAt: new Date() } },
         { new: true, select: "-password" }
       );
+      console.log(data,123456)
       if (data) {
-        res.status(200).send({ status: 200, message: "Deleted successfully" });
+      return  res.status(200).send({ status: 200, message: "Deleted successfully" });
       }
     } else {
-      res.status(401).send({ status: 401, message: "Please provide id" });
+     return res.status(401).send({ status: 401, message: "Please provide id" });
     }
   } catch (err) {
-    res.status(500).send({ status: 500, message: "Internal server error" });
+  return  res.status(500).send({ status: 500, message: "Internal server error" });
   }
 };
 
